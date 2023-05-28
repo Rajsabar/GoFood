@@ -1,0 +1,45 @@
+const mongoose = require('mongoose');
+const mongoURI='mongodb+srv://rajsabarjotsingh:Rajsabar1234@cluster0.ral2vxf.mongodb.net/GoFood?retryWrites=true&w=majority'
+
+// const mongoDB = async()=>{
+//     await mongoose.connect(mongoURI , ()=>{
+//         console.log("Connected")
+//     });
+// }
+
+// const mongoDB = async()=>{
+//     await mongoose.connect(mongoURI);
+// }
+// module.exports=mongoDB;
+
+const mongoDB = async () => {
+    try {
+      await mongoose.connect(mongoURI);
+      console.log("Connected to MongoDB successfully!");
+      
+      const fetched_data=await mongoose.connection.db.collection("food_item");
+      //console.log(fetched_data.find({}))
+      fetched_data.find({}).toArray(function(err,data){
+        if(err) console.log(err);
+        else console.log(data);
+      })
+
+    } catch (error) {
+      console.log("Error connecting to MongoDB:", error.message);
+    }
+    console.log("over");
+  };
+  
+  module.exports = mongoDB;
+
+  // ----------------------------------------------------------------------------------
+
+  // <div className="container">
+  //       {
+  //         foodCat!==[] 
+  //         ? foodCat.map((data)=>{
+  //           return(
+  //             <div key={data._id} className="fs-3 m-3">{data.CategoryName}</div>
+  //           )
+  //         }): ""
+  //       }
